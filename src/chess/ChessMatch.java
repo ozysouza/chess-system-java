@@ -7,8 +7,11 @@ import java.util.stream.Collectors;
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
+import chess.pieces.Bishop;
 import chess.pieces.King;
+import chess.pieces.Knight;
 import chess.pieces.Pawn;
+import chess.pieces.Queen;
 import chess.pieces.Rook;
 
 public class ChessMatch {
@@ -145,13 +148,13 @@ public class ChessMatch {
 				return (ChessPiece)p;
 			}
 		}
-		throw new IllegalStateException("There is no " + color + "King on the board");
+		throw new IllegalStateException("There is no " + color + " King on the board");
 	}
 		
 	private boolean testCheck(Color color) {
 		Position kingPosition = King(color).getChessPosition().toPosition();
-		List<Piece> opponenetPieces = pieceOntheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == opponent(color)).collect(Collectors.toList());
-		for(Piece p : opponenetPieces) {
+		List<Piece> opponentPieces = pieceOntheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == opponent(color)).collect(Collectors.toList());
+		for(Piece p : opponentPieces) {
 			boolean[][] mat = p.possibleMoves();
 			if(mat[kingPosition.getRow()][kingPosition.getColumn()]) {
 				return true;
@@ -192,7 +195,12 @@ public class ChessMatch {
 	
 	private void initialSetup() {
         placeNewPiece('a', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('b', 1, new Knight(board, Color.WHITE));
+        placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
+        placeNewPiece('d', 1, new Queen(board, Color.WHITE));
         placeNewPiece('e', 1, new King(board, Color.WHITE));
+        placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
+        placeNewPiece('g', 1, new Knight(board, Color.WHITE));
         placeNewPiece('h', 1, new Rook(board, Color.WHITE));
         placeNewPiece('a', 2, new Pawn(board, Color.WHITE));
         placeNewPiece('b', 2, new Pawn(board, Color.WHITE));
@@ -204,7 +212,12 @@ public class ChessMatch {
         placeNewPiece('h', 2, new Pawn(board, Color.WHITE));
 
         placeNewPiece('a', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('b', 8, new Knight(board, Color.BLACK));
+        placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
+        placeNewPiece('d', 8, new Queen(board, Color.BLACK));
         placeNewPiece('e', 8, new King(board, Color.BLACK));
+        placeNewPiece('f', 8, new Bishop(board, Color.BLACK));
+        placeNewPiece('g', 8, new Knight(board, Color.BLACK));
         placeNewPiece('h', 8, new Rook(board, Color.BLACK));
         placeNewPiece('a', 7, new Pawn(board, Color.BLACK));
         placeNewPiece('b', 7, new Pawn(board, Color.BLACK));
